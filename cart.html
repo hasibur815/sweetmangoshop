@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Cart</title>
+</head>
+<body>
+    <h1>My Cart</h1>
+    <style>
+
+    }
+
+cart {
+      margin-top: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .cart-item-image {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .cart-total {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .checkout-button {
+      padding: 10px 20px;
+      background-color: #FF0000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .checkout-button:hover {
+      background-color: #FF0000;
+    }
+
+    /* CSS styles for the checkout section */
+    .checkout {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .checkout h2 {
+      margin-bottom: 10px;
+    }
+
+    .checkout-form input {
+      margin-bottom: 10px;
+      padding: 5px;
+      width: 100%;
+    }
+
+    .checkout-form button {
+      padding: 10px 20px;
+      background-color: #FF0000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .checkout-form button:hover {
+      background-color: #FF0000;
+    }
+    </style>
+</head>
+<body>
+    <div class="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <p class="cart-total">Total: $0.00</p>
+    <button class="checkout-button">Checkout</button>
+  </div>
+
+  <div class="checkout">
+    <h2>Checkout</h2>
+    <form class="checkout-form">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <input type="tel" placeholder="Phone" required>
+      <input type="text" placeholder="Address" required>
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+
+  <script>
+    const products = [
+      {
+        title: "Mango 1",
+        price: 10.0,
+      },
+      {
+        title: "Mango 2",
+        price: 12.0,
+      },
+      {
+        title: "Mango 3",
+        price: 15.0,
+      }
+    ];
+
+    const cartItems = [];
+
+    function renderCartItems() {
+      const cartItemsContainer = document.getElementById("cart-items");
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      cartItems.forEach((item) => {
+        const cartItemDiv = document.createElement("div");
+        cartItemDiv.className = "cart-item";
+
+        const cartItemImage = document.createElement("img");
+        cartItemImage.className = "cart-item-image";
+        cartItemImage.src = "mango-placeholder.jpg";
+        cartItemImage.alt = item.title;
+
+        const cartItemDetails = document.createElement("div");
+        cartItemDetails.className = "cart-item-details";
+
+        const cartItemTitle = document.createElement("h2");
+        cartItemTitle.className = "cart-item-title";
+        cartItemTitle.textContent = item.title;
+
+        const cartItemPrice = document.createElement("p");
+        cartItemPrice.className = "cart-item-price";
+        cartItemPrice.textContent = "$" + item.price.toFixed(2);
+
+        cartItemDetails.appendChild(cartItemTitle);
+        cartItemDetails.appendChild(cartItemPrice);
+
+        cartItemDiv.appendChild(cartItemImage);
+        cartItemDiv.appendChild(cartItemDetails);
+
+        cartItemsContainer.appendChild(cartItemDiv);
+
+        total += item.price;
+      });
+
+      const cartTotal = document.querySelector(".cart-total");
+      cartTotal.textContent = "Total: $" + total.toFixed(2);
+    }
+
+    function addToCart(event) {
+      const button = event.target;
+      const productDiv = button.parentNode.parentNode;
+      const productTitle = productDiv.querySelector(".product-title").textContent;
+      const productPrice = parseFloat(productDiv.querySelector(".product-price").textContent.slice(1));
+
+      cartItems.push({ title: productTitle, price: productPrice });
+      renderCartItems();
+    }
+
+    function showCheckout() {
+      const checkoutSection = document.querySelector(".checkout");
+      checkoutSection.style.display = "block";
+    }
+
+    const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
+    addToCartButtons.forEach((button) => {
+      button.addEventListener("click", addToCart);
+    });
+
+    const checkoutButton = document.querySelector(".checkout-button");
+    checkoutButton.addEventListener("click", showCheckout);
+  </script>
+</body>
+</html>
+
+
+
